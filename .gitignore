@@ -1,0 +1,8 @@
+*.key
+*.csr
+*.srl
+*.img
+*.keyfile
+*.bak
+*-plano.yaml
+.env
