@@ -16,5 +16,5 @@ spec:
       - name: listener
         image: nicolaka/netshoot     # misma imagen del sensor y del intruso
         # socat acepta cada conexión en 1883 y responde "ok"; fork permite varias conexiones seguidas
-        command: ["socat", "TCP-LISTEN:1883,fork,reuseaddr", "SYSTEM:echo ok"]
+        command: ["socat", "-v", "TCP-LISTEN:1883,fork,reuseaddr", "SYSTEM:echo ok"]
         ports: [{ containerPort: 1883 }]
