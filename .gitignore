@@ -6,3 +6,9 @@
 *.bak
 *-plano.yaml
 .env
+reto2-hospitvalle/luks/kubeseal
+reto2-hospitvalle/luks/kubeseal-*.tar.gz
+reto2-hospitvalle/luks/uci-cifrado.img
+reto2-hospitvalle/luks/uci-plano.img
+reto2-hospitvalle/luks/uci.keyfile
+reto2-hospitvalle/luks/uci-header.bak
