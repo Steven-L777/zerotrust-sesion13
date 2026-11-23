@@ -1,0 +1,32 @@
+# ServiceAccount de un usuario sin permiso para modificar Pods
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: auditor-sa
+  namespace: agrosugar
+---
+# Role de mínimo privilegio: solo lee Pods (sin patch ni update)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-lector
+  namespace: agrosugar
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+---
+# Asigna ese Role a la ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: auditor-lee-pods
+  namespace: agrosugar
+subjects:
+- kind: ServiceAccount
+  name: auditor-sa
+  namespace: agrosugar
+roleRef:
+  kind: Role
+  name: pod-lector
+  apiGroup: rbac.authorization.k8s.io
