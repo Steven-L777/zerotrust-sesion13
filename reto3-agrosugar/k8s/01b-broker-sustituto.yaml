@@ -1,0 +1,20 @@
+# Broker sustituto: listener TCP en el puerto 1883 (reemplaza a Mosquitto, que fallaba al leer su configuración)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-broker
+  namespace: agrosugar
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: mqtt-broker }
+  template:
+    metadata:
+      labels: { app: mqtt-broker }   # misma etiqueta que usan el Service y las NetworkPolicy
+    spec:
+      containers:
+      - name: listener
+        image: nicolaka/netshoot     # misma imagen del sensor y del intruso
+        # socat acepta cada conexión en 1883 y responde "ok"; fork permite varias conexiones seguidas
+        command: ["socat", "TCP-LISTEN:1883,fork,reuseaddr", "SYSTEM:echo ok"]
+        ports: [{ containerPort: 1883 }]
